@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { existsSync } from 'fs'
+import { existsSync, promises as fs } from 'fs'
 import _debug from 'debug'
 import { mergeConfig } from 'vite'
 import type { Plugin } from 'vite'
@@ -34,8 +34,8 @@ function VitePluginPackageConfig(options: Options = {}): Plugin {
       }
 
       debug(`loading package.json at ${packageJsonPath}`)
-      const packageJson = await import(packageJsonPath)
-      const extend = packageJson.default?.[field]
+      const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'))
+      const extend = packageJson[field]
       if (!extend) {
         debug(`no "${field}" field found in package.json, skip`)
         return
