@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-package-config",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Extend Vite config from package.json field",
   "keywords": [
     "vite-plugin"
