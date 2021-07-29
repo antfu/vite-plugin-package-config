@@ -45,6 +45,12 @@ function VitePluginPackageConfig(options: Options = {}): Plugin {
       debug(extend)
       return mergeConfig(_config, extend)
     },
+    api: {
+      options: {
+        packageJsonPath,
+        field,
+      },
+    },
   }
 }
 
