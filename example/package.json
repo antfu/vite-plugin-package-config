@@ -7,8 +7,8 @@
     "serve": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.3.2",
-    "vite": "^2.4.4",
+    "typescript": "^4.5.2",
+    "vite": "^2.6.14",
     "vite-plugin-package-config": "workspace:*"
   },
   "vite": {
