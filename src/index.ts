@@ -1,7 +1,6 @@
 import { join } from 'path'
 import { existsSync, promises as fs } from 'fs'
 import _debug from 'debug'
-import { mergeConfig } from 'vite'
 import type { Plugin } from 'vite'
 
 const debug = _debug('vite-plugin-package-config')
@@ -27,7 +26,7 @@ function VitePluginPackageConfig(options: Options = {}): Plugin {
 
   return <Plugin>{
     name: 'vite-plugin-package-config',
-    async config(_config) {
+    async config() {
       if (!existsSync(packageJsonPath)) {
         debug('package.json not found')
         return
@@ -43,7 +42,7 @@ function VitePluginPackageConfig(options: Options = {}): Plugin {
 
       debug('merging config with')
       debug(extend)
-      return mergeConfig(_config, extend)
+      return extend;
     },
     api: {
       options: {
