@@ -18,13 +18,22 @@ export interface Options {
   field?: string
 }
 
-function VitePluginPackageConfig(options: Options = {}): Plugin {
+export interface VitePluginPackageConfigPlugin extends Plugin {
+  api: {
+    options: {
+      packageJsonPath: string
+      field: string
+    }
+  }
+}
+
+function VitePluginPackageConfig(options: Options = {}): VitePluginPackageConfigPlugin {
   const {
     packageJsonPath = join(process.cwd(), 'package.json'),
     field = 'vite',
   } = options
 
-  return <Plugin>{
+  return {
     name: 'vite-plugin-package-config',
     async config() {
       if (!existsSync(packageJsonPath)) {
