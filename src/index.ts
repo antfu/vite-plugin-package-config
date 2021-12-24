@@ -28,21 +28,27 @@ function VitePluginPackageConfig(options: Options = {}): Plugin {
     name: 'vite-plugin-package-config',
     async config() {
       if (!existsSync(packageJsonPath)) {
-        debug('package.json not found')
+        debug('package.json not found at %s', packageJsonPath)
         return
       }
 
-      debug(`loading package.json at ${packageJsonPath}`)
-      const packageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'))
-      const extend = packageJson[field]
-      if (!extend) {
-        debug(`no "${field}" field found in package.json, skip`)
-        return
-      }
+      debug('loading package.json at %s', packageJsonPath)
 
-      debug('merging config with')
-      debug(extend)
-      return extend;
+      try {
+        const packageJson: Record<string, any> = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'))
+        const extend = packageJson[field]
+        if (!extend) {
+          debug('no %s field found in package.json, skip', field)
+          return
+        }
+
+        debug('merging config with %o', extend)
+        return extend
+      }
+      catch (e) {
+        debug('parse error: %o', e)
+        debug('error on loading package.json at %s, skip', packageJsonPath)
+      }
     },
     api: {
       options: {
